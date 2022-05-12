@@ -56,7 +56,7 @@ int idleSpeed; //Скорость движения машинки
 uint32_t myTimer1; // Переменная хранения времени 1
 uint32_t myTimer2; // Переменная хранения времени 2
 
-// Массив пути для демострации, каждое первое число значение ШИМ 
+// Массив пути для демострации, каждое первое число значение ШИМ
 //(от 0 до 255) для левого двигателя, каждое второе для правого
 byte ArrayOfTheWay[] = {110, 110, 110, 180, 180, 110, 255, 110, 255, 110, 110, 255, 110, 255, 255, 255, 110, 130, 110, 130, 110, 130, 130, 110, 130, 110, 110, 255, 255, 110, 255, 110, 110, 255};
 
@@ -192,6 +192,12 @@ void LineRider() {
     //Поворот направо
     else if (InfraredSensorRightState == 0 && InfraredSensorLeftState == 1) {
       digitalWrite(RightMotor, LOW);
+    }
+
+    //Прямо
+    else if ((InfraredSensorRightState == 1 && InfraredSensorLeftState == 1) || (InfraredSensorRightState == 0 && InfraredSensorLeftState == 0)) {
+      analogWrite(LeftMotor, int (idleSpeed * LeftMotorAdj));
+      analogWrite(RightMotor, int(idleSpeed * RightMotorAdj));
     }
   }
 }
